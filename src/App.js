@@ -5,12 +5,16 @@ import Home from "./components/home";
 import styled from "@emotion/styled";
 
 const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  padding-top: 100px;
-  padding-right: 50px;
+  /* display: flex; */
+  /* flex-direction: column;
+  align-items: flex-end; */
+  /* padding-top: 100px; */
+  /* padding-right: 10px; */
   text-align: center;
+  /* justify-content: flex-end; */
+  position: absolute;
+  right: 10px;
+  z-index: 1;
 `;
 const StyledNavbar = styled.ul`
   justify-content: space-around;
@@ -38,37 +42,39 @@ const StyledLi = styled.li`
 
 const Hamburger = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 1em;
-  right: 5em;
-  top: 3em;
-  position: absolute;
+  align-items: flex-end;
+  /* right: 5em;
+  top: 3em; */
+  /* position: absolute;
   border-color: black;
-  border-radius: 5px;
+  border-radius: 5px; */
 `;
 
 const Patty = styled.div`
-  &:before {
-    content: "";
-    background: black;
-    height: 3px;
-    width: 1.75em;
-    border-radius: 3px;
-  }
   content: "";
   background: black;
   height: 3px;
   width: 1.75em;
   border-radius: 3px;
-
-  &:after {
-    content: "";
-    background: black;
-    height: 3px;
-    width: 1.75em;
-    border-radius: 3px;
-  }
+  margin-bottom: 6px;
 `;
 
+const PattySecond = styled.div`
+  background: black;
+  height: 3px;
+  width: 1.5em;
+  border-radius: 3px;
+  margin-bottom: 6px;
+`;
+
+const PattyThird = styled.div`
+  background: black;
+  height: 3px;
+  width: 1.75em;
+  border-radius: 3px;
+`;
 class App extends React.Component {
   constructor() {
     super();
@@ -82,38 +88,38 @@ class App extends React.Component {
       showNavbar: !this.state.showNavbar
     });
   }
+
   render() {
-    let Navbar = this.state.showNavbar ? (
-      <StyledDiv>
-        <nav>
-          <StyledNavbar>
-            <StyledLi>
-              <StyledLink to="">Home</StyledLink>
-            </StyledLi>
-            <StyledLi>
-              <StyledLink to="">About</StyledLink>
-            </StyledLi>
-            <StyledLi>
-              <StyledLink to="">Portfolio</StyledLink>
-            </StyledLi>
-            <StyledLi>
-              <StyledLink to="">Contact</StyledLink>
-            </StyledLi>
-          </StyledNavbar>
-        </nav>
-
-        <Route path="/home" exact component={Home} />
-      </StyledDiv>
-    ) : (
-      ""
-    );
-
     return (
       <div>
         <Hamburger onClick={this.showNavbar.bind(this)}>
           <Patty />
+          <PattySecond />
+          <PattyThird />
         </Hamburger>
-        {Navbar}
+        {this.state.showNavbar && (
+          <StyledDiv>
+            <nav>
+              <StyledNavbar>
+                <StyledLi>
+                  <StyledLink to="/home">Home</StyledLink>
+                </StyledLi>
+                <StyledLi>
+                  <StyledLink to="">About</StyledLink>
+                </StyledLi>
+                <StyledLi>
+                  <StyledLink to="">Portfolio</StyledLink>
+                </StyledLi>
+                <StyledLi>
+                  <StyledLink to="">Contact</StyledLink>
+                </StyledLi>
+              </StyledNavbar>
+            </nav>
+          </StyledDiv>
+        )}
+
+        <Route path="/" exact component={Home} />
+        <Route path="/home" component={Home} />
       </div>
     );
   }
